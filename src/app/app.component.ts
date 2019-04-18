@@ -76,6 +76,7 @@ export class AppComponent implements OnInit {
    console.log("Row--> "+row.data.selftext+"--"+row.data.author);
    this.selftext = row.data.selftext;
    this.author = row.data.author;
+   this.title = row.data.title;
    this.comments = row.data.permalink; 
    this.redditSubscribe = this._service.getComments(row.data.permalink).subscribe((pos_resp)=>{
    this.commentObject = pos_resp;

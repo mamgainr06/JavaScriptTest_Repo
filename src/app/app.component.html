@@ -1,11 +1,10 @@
-<div style="background-color: darkgrey">
+<div style="background-color: dodgerblue">
 <h1 style="text-align: center;color: crimson;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"> Sub Reddit Details </h1>
 <br/>
-<table>
+<table style="width: 100%">
   <tr>
     <td><b>Sub Reddit : </b></td>
     <td><input type="text"  [(ngModel)]="subRedditName" ></td>
-    <td></td>
     <td colspan="2"><button (click)="fetchData()">Get Full Data</button></td>
   </tr>
   <tr>
@@ -18,14 +17,11 @@
       <td><button (click)="fetchDatawithParams()">Submit </button></td>
     </tr>
   <tr>
-    <td><b>SelfText : </b> </td>
-    <td><input type="text"  value={{selftext}} ></td>
-    <td><b>Author</b></td>
-    <td><input type="text"  value={{author}} ></td>
-    <td><b>Permalink : </b> </td>
-    <td><p>{{comments}}</p></td>
-    <td><b>Title : </b></td>
-    <td><input type="text"  value={{title}} ></td>
+    <td><b>SelfText : </b></td>
+    <td><input type="text" value={{selftext}} ></td>
+    <td><b>Author : </b>{{author}}</td>
+    <td><b>Permalink : </b> {{comments}} </td>
+    <td><b>Title : </b> {{title}} </td>
   </tr>
   </table>
 <div>
