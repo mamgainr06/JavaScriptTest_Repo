@@ -1,0 +1,113 @@
+<div style="background-color: darkgrey">
+<h1 style="text-align: center;color: crimson;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif"> Sub Reddit Details </h1>
+<br/>
+<table>
+  <tr>
+    <td><b>Sub Reddit : </b></td>
+    <td><input type="text"  [(ngModel)]="subRedditName" ></td>
+    <td></td>
+    <td colspan="2"><button (click)="fetchData()">Get Full Data</button></td>
+  </tr>
+  <tr>
+      <td><b>Limit : </b></td>
+      <td><input type="text"  [(ngModel)]="limit" ></td>
+      <td><b>After Id : </b></td>
+      <td><input type="text"  [(ngModel)]="after" ></td>
+      <td><b>Before Id : </b></td>
+      <td><input type="text"  [(ngModel)]="before" ></td>
+      <td><button (click)="fetchDatawithParams()">Submit </button></td>
+    </tr>
+  <tr>
+    <td><b>SelfText : </b> </td>
+    <td><input type="text"  value={{selftext}} ></td>
+    <td><b>Author</b></td>
+    <td><input type="text"  value={{author}} ></td>
+    <td><b>Permalink : </b> </td>
+    <td><p>{{comments}}</p></td>
+    <td><b>Title : </b></td>
+    <td><input type="text"  value={{title}} ></td>
+  </tr>
+  </table>
+<div>
+<h1>Comments : </h1>
+<span *ngFor="let commentdata of commentObject">
+    <ul>
+       <ng-template #recursiveList let-commentdata>
+         <li *ngFor="let item of commentdata.data.children">
+           {{item.data.body}}
+           <ul *ngIf="item.data?.replies && item.data?.replies.length > 0">
+             <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.children }"></ng-container>
+        
+             <ng-template #recursiveList let-item.data.replies> 
+              <li  *ngFor="let itemrep of item.data.replies.data.children">
+                       {{itemrep.data.body}}
+                      <ul *ngIf="itemrep.data?.replies.data.children && itemrep.data.replies.data.children.length > 0">
+                          <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.data.replies.data.children }"></ng-container>
+                        </ul>
+                  </li>
+                  </ng-template>
+                <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.data.replies }"></ng-container>
+              </ul>
+         </li>
+       </ng-template>
+       <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: commentdata }"></ng-container>
+     </ul>
+    </span>
+</div>
+
+<br/>
+<br/>
+<mat-card>
+  <table id="matTable" mat-table [dataSource]="MyDataSource">
+
+    <!--Thumbnail Column-->
+    <ng-container matColumnDef="thumbnail">
+      <th style="text-align: center" mat-header-cell  *matHeaderCellDef> Thumbnail </th>
+      <td mat-cell *matCellDef="let element"><img width="100px" height="50px" class="img-rounded" src="{{element.data.thumbnail}}"/> </td>
+    </ng-container>
+
+    <!--- Created Column -->
+    <ng-container matColumnDef="created">
+      <th style="text-align: center" mat-header-cell *matHeaderCellDef> Created </th>
+      <td mat-cell  *matCellDef="let element">{{element.data.created * 1000 | date:'yyyy-MM-dd HH:mm:ss '}} </td>
+    </ng-container>
+
+     <!-- Num_comments Column -->
+     <ng-container matColumnDef="num comments">
+      <th style="text-align: center" mat-header-cell *matHeaderCellDef> Num Comments  </th>
+      <td mat-cell  *matCellDef="let element"> {{element.data.num_comments}} </td>
+    </ng-container>
+
+    <!-- Author Column -->
+    <ng-container matColumnDef="author">
+      <th style="text-align: center" mat-header-cell *matHeaderCellDef> Author </th>
+      <td mat-cell *matCellDef="let element"> {{element.data.author}} </td>
+    </ng-container>
+
+    <!-- Score Column -->
+    <ng-container matColumnDef="score">
+      <th style="text-align: center" mat-header-cell *matHeaderCellDef> Score </th>
+      <td mat-cell  *matCellDef="let element"> {{element.data.score}} </td>
+    </ng-container>
+
+    <!-- permalink Column -->
+    <ng-container matColumnDef="permalink">
+      <th style="text-align: center" mat-header-cell *matHeaderCellDef> Permalink </th>
+      <td mat-cell *matCellDef="let element"><a href="https://www.reddit.com{{element.data.permalink}}" target="_blank">{{element.data.permalink}}</a> </td>
+    </ng-container>
+
+    <!-- title Column -->
+    <ng-container matColumnDef="title">
+      <th style="text-align: center" mat-header-cell *matHeaderCellDef> Title </th>
+      <td mat-cell *matCellDef="let element"> {{element.data.title}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editSelfText(row)"></tr>
+   
+  </table>
+ 
+  <mat-paginator #paginator [pageSize]="10"  [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
+
+</mat-card>
+</div>

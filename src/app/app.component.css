@@ -1,0 +1,25 @@
+#matTable th,td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+#matTable th {
+    background-color: aquamarine;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 15px;
+    color: indigo;
+    font-weight: bold;
+}
+
+#matTable td {
+    font-family: verdana;
+    font-size: 10px;
+    text-align: center;
+}
+
+#matTable tr:hover {background-color: #ddd;}
+
+ table {
+    border-collapse: collapse;
+    width: 100%;
+}
